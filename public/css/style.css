@@ -1,0 +1,141 @@
+/*STYLESHEET FOR GROUPCHAT*/
+*{
+  margin:0px;
+  padding:0px;
+  font-family: 'Open Sans', sans-serif;
+}
+/*header*/
+#header{
+  background:rgb(255,88,86);
+  color:white;
+}
+#header h1{
+  margin-left:5%;
+  padding:2%;
+  display:inline-block;
+  width:40%;
+}
+
+#header h3{
+  float:right;
+  display:inline-block;
+  padding:3%;
+}
+
+a{
+  text-decoration: none;
+  color:white;
+}
+
+/*message board section*/
+#wrapper{
+  padding-top:5%;
+  background:white;
+  color:black;
+  margin:0px auto;
+  width:85%;
+  margin-bottom:10%;
+}
+
+#name{
+  color:rgb(255,88,86);
+}
+
+#message_board{
+  margin-top:2%;
+  margin-right:2%;
+  border:solid 1px silver;
+  width:102%;
+  height: 400px;
+  overflow:scroll;
+  color:black;
+}
+  .chatheader{
+    width:100%;
+    height:50px;
+    background:rgb(255,88,86);
+    color:white;
+    display:inline-block;
+    vertical-align: top;
+  }
+  .chatheader h4{
+    padding:1.5%;
+    display:inline-block;
+  }
+
+#textbox{
+  display:inline-block;
+  width:100%;
+  vertical-align: top;
+}
+
+textarea{
+  resize:none;
+  display:inline-block;
+  width:98%;
+  height:200px;
+  font-size:1em;
+  padding:1%;
+}
+p{
+  padding:1%;
+}
+#submit{
+  float:right;
+  border:none;
+  font-size:1em;
+  padding:20px 60px;
+  border-radius: 5px;
+  background: rgb(255,88,86);
+  color:white;
+}
+
+#new_message{
+  width:102%;
+}
+
+span.user{
+  font-weight:bolder;
+  color:rgb(255,88,86);
+}
+
+span.guest{
+  font-weight:bolder;
+  color:cadetblue;
+}
+
+
+/*homepage*/
+#homepage{
+  background:rgb(255,88,86);
+  color:white;
+}
+
+#homepage h1{
+  font-size:4em;
+  text-align: center;
+  margin-top:20%;
+}
+
+#start{
+  margin-left: 40%;
+  padding: 2%;
+  color: rgb(255,88,86);
+  border: solid 2px white;
+  background: white;
+  border-radius: 10px;
+}
+
+#start:hover{
+  background:rgba(255,88,86,0.8);
+  color:white;
+}
+
+.event{
+  color:silver;
+  font-style:italic;
+}
+
+h4{
+  text-align: center;
+}

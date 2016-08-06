@@ -1,0 +1,136 @@
+<html>
+
+<head>
+    <title>Discussion Board</title>
+    <script src="/javascript/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- stylesheets -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //establish socket connection
+            io = io.connect();
+            io.emit("page_load");
+            var session_id = '';
+
+            //pop up alert for name if user doesn't have an active id in session_info
+            io.on("get_user_name", function(data) {
+                var name = prompt("Please enter your name:");
+                io.emit("new_user", {
+                    name: name
+                });
+                current_user = name;
+            });
+
+            //if there is a new user to the chatroom, let other users know
+            io.on("new_user_entry", function(data) {
+                $("#message_board").append("<p><span class='event'>" + data.name + " has entered the room</span></p>");
+
+                //scroll messages div to bottom to follow most recent event.
+                var div = $("#message_board");
+                div.scrollTop(div.prop('scrollHeight'));
+            });
+
+            //new message submit
+            $("#new_message").submit(function() {
+                io.emit("new_message", {
+                    message: $("#message").val()
+                });
+                return false;
+            })
+
+            //allows user to press enter key to submit message
+            $("#new_message").keypress(function(e) {
+                var key = e.which;
+                if (key == 13) {
+                    io.emit("new_message", {
+                        message: $("#message").val()
+                    });
+                    return false;
+                }
+            });
+
+
+            //show a line for each message in the array on page load.
+            io.on("load_messages", function(data) {
+                var messages = data.messages;
+                var message_thread = "";
+                session_id = data.session_id;
+
+                for (var ctr = 0; ctr < messages.length; ctr++) {
+                    message_thread += "<p>" + messages[ctr].name + ": " + messages[ctr].message + "</p>";
+                }
+
+                //append messages to board, and scroll the message div to the bottom once new messages are added.
+                $("#message_board").append(message_thread)
+                var div = $("#message_board");
+                div.scrollTop(div.prop('scrollHeight'));
+            });
+
+            //show new messages that were posted
+            io.on("post_new_message", function(data) {
+                //if user who is posting the message
+                if (data.session_id == session_id) {
+                    $("#message_board").append("<p><span class='user'>" + data.user + ":</span> " + data.new_message + "</p>");
+                    //clear the message field after user submits
+                    $('#message').val('');
+                } else {
+                    $("#message_board").append("<p><span class='guest'>" + data.user + ":</span> " + data.new_message + "</p>");
+                }
+                //scroll the message div to the bottom once new messages are added.
+                var div = $("#message_board");
+                div.scrollTop(div.prop('scrollHeight'));
+            });
+
+            //log user out
+            $("#logout").click(function() {
+                io.emit("user_logout", {
+                    loggingout_user: session_id
+                });
+                return false;
+            });
+
+            // broadcast leaving event to others in chatroom
+            io.on('user_loggedout', function(data) {
+                console.log("making it back to index", data);
+                $("#message_board").append("<p><span class='event'>" + data.userloggedout + " has left the room. </span></p>");
+            });
+
+            // redirect logout user to home page
+            io.on('gohome', function() {
+                window.location = "/";
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="header">
+        <h1>DISCUSSION BOARD</h1>
+        <h3><a id="logout" href="/home">LOGOUT</a></h3>
+    </div>
+    <div id="wrapper">
+        <h1 id="name">Welcome Back</h1>
+
+        <div id="message_board">
+            <div class="chatheader">
+                <h4>CHAT ROOM</h4></div>
+        </div>
+
+        <div id="textbox">
+            <form id="new_message">
+                <div class="chatheader">
+                    <h4>WHAT'S ON YOUR MIND?</h4></div>
+                <textarea id="message" placeholder="enter your message here"></textarea><br>
+                <input id="submit" type="submit" value="SEND">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
