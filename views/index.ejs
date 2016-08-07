@@ -20,9 +20,13 @@
             //pop up alert for name if user doesn't have an active id in session_info
             io.on("get_user_name", function(data) {
                 var name = prompt("Please enter your name:");
-                io.emit("new_user", {
-                    name: name
-                });
+                if (name == null){
+                    window.location = "/";
+                } else{
+                    io.emit("new_user", {
+                        name: name
+                    });
+                }
                 current_user = name;
             });
 
@@ -93,6 +97,15 @@
                 });
                 return false;
             });
+
+            //perform logout actions if user closes tab/window too
+            window.onunload = function (event) {
+                console.log("made it to user logout broswer close");
+                io.emit("user_logout", {
+                    loggingout_user: session_id
+                });
+                return false;
+            };
 
             // broadcast leaving event to others in chatroom
             io.on('user_loggedout', function(data) {
