@@ -49,6 +49,7 @@ module.exports = function Route(app){
 			//if a user already exists in session info, push them back into the chatusers array.
 			var user = is_user(req.session.id);
 			chatusers.push(user.name);
+			app.io.broadcast("new_user_entry", {name: user.name});
 		}
 
 	})
