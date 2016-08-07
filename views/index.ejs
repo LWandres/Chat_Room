@@ -16,11 +16,14 @@
             io = io.connect();
             io.emit("page_load");
             var session_id = '';
+            var logclicked = '';
+            var cancelclicked = '';
 
             //pop up alert for name if user doesn't have an active id in session_info
             io.on("get_user_name", function(data) {
                 var name = prompt("Please enter your name:");
                 if (name == null){
+                    cancelclicked = true;
                     window.location = "/";
                 } else{
                     io.emit("new_user", {
@@ -92,19 +95,23 @@
 
             //log user out
             $("#logout").click(function() {
+                logclicked = true;
                 io.emit("user_logout", {
-                    loggingout_user: session_id
+                    loggingout_user: session_id,
                 });
                 return false;
             });
 
             //perform logout actions if user closes tab/window too
             window.onunload = function (event) {
-                console.log("made it to user logout broswer close");
-                io.emit("user_logout", {
-                    loggingout_user: session_id
-                });
-                return false;
+                //makes sure users aren't logged out twice and popped off of chatusers array on index.js
+                if ((logclicked != true) && (cancelclicked != true)) {
+                    logclicked = '';
+                    io.emit("user_logout", {
+                        loggingout_user: session_id,
+                    });
+                    return false;
+                }
             };
 
             // broadcast leaving event to others in chatroom
@@ -118,6 +125,15 @@
                 window.location = "/";
             });
 
+        //Google Analytics
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-82133906-1', 'auto');
+          ga('send', 'pageview');
+
         });
     </script>
 </head>
@@ -126,6 +142,7 @@
     <div id="header">
         <h1>DISCUSSION BOARD</h1>
         <h3><a id="logout" href="/home">LOGOUT</a></h3>
+
     </div>
     <div id="wrapper">
         <h1 id="name">Welcome Back</h1>

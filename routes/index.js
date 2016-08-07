@@ -4,6 +4,8 @@ var session_info = [];
 var messages = [];
 //stores all chatusers (pop off to clear all when no users are in chatroom)
 var chatusers = [];
+//checks if logout button was clicked to avoid double logout with unload.
+var logout = '';
 // function to check if user is already logged in / session credentials are active
 var is_user = function(session_id){
 	console.log("Session info start",session_info);
@@ -70,6 +72,7 @@ module.exports = function Route(app){
 	app.io.route("user_logout", function(req,res){
 		//getting and sending the user name of the person logging out
 		var user = is_user(req.session.id);
+
 		app.io.broadcast("user_loggedout", { userloggedout: user.name });
 
 		// If the logging out user is the client's user, redirect to home page.
@@ -77,6 +80,7 @@ module.exports = function Route(app){
 			//used to keep track of dynamic # of users in chatroom at a time.
 			if (chatusers.length > 0){
 				chatusers.pop();
+				console.log(chatusers);
 			}
 			//if all users have left the chatroom, clear out data
 			if (chatusers.length < 1){
