@@ -109,6 +109,7 @@ span.guest{
 #homepage{
   background:rgb(255,88,86);
   color:white;
+  text-align: center;
 }
 
 #homepage h1{
@@ -118,12 +119,12 @@ span.guest{
 }
 
 #start{
-  margin-left: 40%;
   padding: 2%;
   color: rgb(255,88,86);
   border: solid 2px white;
   background: white;
   border-radius: 10px;
+  width:20%;
 }
 
 #start:hover{
