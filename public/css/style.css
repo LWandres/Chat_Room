@@ -4,10 +4,14 @@
   padding:0px;
   font-family: 'Open Sans', sans-serif;
 }
+body{
+    background-color: whitesmoke;
+}
 /*header*/
 #header{
   background:rgb(255,88,86);
   color:white;
+  box-shadow: 0 0 20px darkgray;
 }
 #header h1{
   margin-left:5%;
@@ -20,6 +24,7 @@
   float:right;
   display:inline-block;
   padding:3%;
+  margin-right:5%;
 }
 
 a{
@@ -30,10 +35,9 @@ a{
 /*message board section*/
 #wrapper{
   padding-top:5%;
-  background:white;
   color:black;
   margin:0px auto;
-  width:85%;
+  width:90%;
   margin-bottom:10%;
 }
 
@@ -42,13 +46,15 @@ a{
 }
 
 #message_board{
-  margin-top:2%;
-  margin-right:2%;
   border:solid 1px silver;
-  width:102%;
-  height: 400px;
+  width:50%;
+  height: 450px;
   overflow:scroll;
   color:black;
+  background-color: white;
+  display: inline-block;
+  webkit-box-shadow: 0 0 30px darkgray;
+  box-shadow: 0px 0px 30px darkgray;
 }
   .chatheader{
     width:100%;
@@ -59,26 +65,26 @@ a{
     vertical-align: top;
   }
   .chatheader h4{
-    padding:1.5%;
+    padding:3%;
     display:inline-block;
   }
 
 #textbox{
   display:inline-block;
-  width:100%;
+  width:49%;
   vertical-align: top;
 }
 
 textarea{
   resize:none;
   display:inline-block;
-  width:98%;
-  height:200px;
+  width:100%;
+  height:400px;
   font-size:1em;
-  padding:1%;
+  padding:2%;
 }
 p{
-  padding:1%;
+  padding:2%;
 }
 #submit{
   float:right;
@@ -88,10 +94,14 @@ p{
   border-radius: 5px;
   background: rgb(255,88,86);
   color:white;
+  margin-top:2%;
+  box-shadow: 0 0 20px darkgray;
 }
 
 #new_message{
-  width:102%;
+  width:100%;
+  webkit-box-shadow: 0 0 30px darkgray;
+  box-shadow: 0px 0px 30px darkgray;
 }
 
 span.user{
@@ -110,12 +120,20 @@ span.guest{
   background:rgb(255,88,86);
   color:white;
   text-align: center;
+  background-image: url("/assets/chatroom.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 #homepage h1{
   font-size:4em;
   text-align: center;
-  margin-top:20%;
+  margin-top:15%;
+}
+#navbar{
+    top:0px;
+    background-color: black;
+    height:8%;
 }
 
 #start{
@@ -125,6 +143,7 @@ span.guest{
   background: white;
   border-radius: 10px;
   width:20%;
+  font-size: 1em;
 }
 
 #start:hover{
