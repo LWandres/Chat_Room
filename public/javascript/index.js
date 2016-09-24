@@ -9,7 +9,7 @@ $(document).ready(function() {
         //pop up alert for name if user doesn't have an active id in session_info
         io.on("get_user_name", function(data) {
             var name = prompt("Please enter your name:");
-            if (name == null){
+            if (name === null || name === ''){
                 cancelclicked = true;
                 window.location = "/";
             } else{
@@ -35,7 +35,7 @@ $(document).ready(function() {
                 message: $("#message").val()
             });
             return false;
-        })
+        });
 
         //allows user to press enter key to submit message
         $("#new_message").keypress(function(e) {
@@ -60,7 +60,7 @@ $(document).ready(function() {
             }
 
             //append messages to board, and scroll the message div to the bottom once new messages are added.
-            $("#message_board").append(message_thread)
+            $("#message_board").append(message_thread);
             var div = $("#message_board");
             div.scrollTop(div.prop('scrollHeight'));
         });
@@ -92,7 +92,7 @@ $(document).ready(function() {
         //perform logout actions if user closes tab/window too
         window.onunload = function (event) {
             //makes sure users aren't logged out twice and popped off of chatusers array on index.js
-            if ((logclicked != true) && (cancelclicked != true)) {
+            if ((logclicked !== true) && (cancelclicked !== true)) {
                 logclicked = '';
                 io.emit("user_logout", {
                     loggingout_user: session_id,
